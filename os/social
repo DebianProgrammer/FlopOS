@@ -1,0 +1,8 @@
+term.clear()
+term.setCursorPos(1,1)
+io.write("Enter server hostname: ")
+print(" ")
+s = io.read()
+io.write("Enter a nickname: ")
+n = io.read()
+shell.run("chat join ", s, " ", n)
