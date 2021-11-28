@@ -16,11 +16,11 @@ local function drawm()
     term.write("FlopOS v1")
     term.setCursorPos(w-11,1)
     if option == 1 then
-        term.write("FlopShell")
+        term.write("Social")
     elseif option == 2 then
-        term.write("FlopPrograms")
+        term.write("Games")
     elseif option == 3 then
-        term.write("Shutdown")
+        term.write("Utility")
     elseif option == 4 then
         term.write("Reboot")
     else
