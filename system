@@ -1,0 +1,6 @@
+rednet.open("back")
+while true do
+    os.sleep(1)
+    local p = vector.new(gps.locate(3))
+    rednet.send(1, tostring(p))
+end
