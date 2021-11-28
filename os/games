@@ -1,0 +1,87 @@
+
+local w,h = term.getSize()
+
+function printcenter(y,s)
+    local x = math.floor((w - string.len(s)) / 2)
+    term.setCursorPos(x,y)
+    term.clearLine()
+    term.write(s)
+end
+
+local option = 1
+
+local function drawm()
+    term.clear()
+    term.setCursorPos(1,1)
+    term.write("FlopOS Games")
+    term.setCursorPos(w-11,1)
+    if option == 1 then
+        term.write("Tetris")
+    elseif option == 2 then
+        term.write("Snake")
+    elseif option == 3 then
+        term.write("Adventure")
+    elseif option == 4 then
+        term.write("Redirection")
+    elseif option == 5 then
+        term.write("Go back")
+    else
+        end
+end
+
+term.clear()
+local function froend()
+    printcenter(math.floor(h/2) - 5, "")
+    printcenter(math.floor(h/2) - 4, "")
+    printcenter(math.floor(h/2) - 3, "")
+    printcenter(math.floor(h/2) - 2, "")
+    printcenter(math.floor(h/2) - 1, "")
+    printcenter(math.floor(h/2) + 0, ((option == 1) and "[ Tetris ]") or "Tetris")
+    printcenter(math.floor(h/2) + 1, ((option == 2) and "[ Snake ]") or "Snake")
+    printcenter(math.floor(h/2) + 2, ((option == 3) and "[ Adventure ]") or "Adventure")
+    printcenter(math.floor(h/2) + 3, ((option == 4) and "[ Redirection ]") or "Redirection")
+    printcenter(math.floor(h/2) + 4, ((option == 5) and "[ Go back ]") or "Go back")
+end
+
+drawm()
+froend()
+
+while true do
+    local e,p = os.pullEvent()
+    if e == "key" then
+        local key = p
+        if key == keys.up then
+            if option > 1 then
+                option = option - 1
+                drawm()
+                froend()
+            end
+        elseif key == keys.down then
+            if option < 5 then
+                option = option + 1
+                drawm()
+                froend()
+            end
+        elseif key == keys.enter then
+            break
+    end
+end
+end
+
+
+term.clear()
+if option == 1 then
+    shell.switchTab(shell.openTab("falling"))
+    shell.run("/os/games")
+elseif option == 2 then
+    shell.switchTab(shell.openTab("worm"))
+    shell.run("/os/games")
+elseif option == 3 then
+    shell.switchTab(shell.openTab("adventure"))
+    shell.run("/os/games")
+elseif option == 4 then
+    shell.switchTab(shell.openTab("redirection"))
+    shell.run("/os/games")
+else
+    shell.run("/menu")
+end
