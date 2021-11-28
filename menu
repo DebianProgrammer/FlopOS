@@ -1,0 +1,76 @@
+
+local w,h = term.getSize()
+
+function printcenter(y,s)
+    local x = math.floor((w - string.len(s)) / 2)
+    term.setCursorPos(x,y)
+    term.clearLine()
+    term.write(s)
+end
+
+local option = 1
+
+local function drawm()
+    term.clear()
+    term.setCursorPos(1,1)
+    term.write("FlopOS v1")
+    term.setCursorPos(w-11,1)
+    if option == 1 then
+        term.write("FlopShell")
+    elseif option == 2 then
+        term.write("FlopPrograms")
+    elseif option == 3 then
+        term.write("Shutdown")
+    elseif option == 4 then
+        term.write("Reboot")
+    else
+        end
+end
+
+term.clear()
+local function froend()
+    printcenter(math.floor(h/2) - 3, "")
+    printcenter(math.floor(h/2) - 2, "FlopMenu")
+    printcenter(math.floor(h/2) - 1, "")
+    printcenter(math.floor(h/2) + 0, ((option == 1) and "[ Social ]") or "Social")
+    printcenter(math.floor(h/2) + 1, ((option == 2) and "[ Games ]") or "Games")
+    printcenter(math.floor(h/2) + 2, ((option == 3) and "[ Utility ]") or "Utility")
+    printcenter(math.floor(h/2) + 3, ((option == 4) and "[ Reboot ]") or "Reboot")
+end
+
+drawm()
+froend()
+
+while true do
+    local e,p = os.pullEvent()
+    if e == "key" then
+        local key = p
+        if key == keys.up then
+            if option > 1 then
+                option = option - 1
+                drawm()
+                froend()
+            end
+        elseif key == keys.down then
+            if option < 4 then
+                option = option + 1
+                drawm()
+                froend()
+            end
+        elseif key == keys.enter then
+            break
+    end
+end
+end
+
+
+term.clear()
+if option == 1 then
+    shell.run("/os/social")
+elseif option == 2 then
+    shell.run("/os/games")
+elseif option == 3 then
+    shell.run("/os/utility")
+else
+    os.reboot()
+end
